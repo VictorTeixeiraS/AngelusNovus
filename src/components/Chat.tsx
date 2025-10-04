@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Send, X, Bot, User, Settings, Wifi, WifiOff } from 'lucide-react';
+import { Send, X, Bot, User, Wifi, WifiOff } from 'lucide-react';
 import { langflowService } from '@/services/LangflowService';
 
 interface Message {
@@ -27,16 +27,13 @@ export const Chat: React.FC<ChatProps> = ({ isOpen, onClose }) => {
       id: '1',
       text: langflowService.isConfigured() 
         ? 'Olá! Sou seu assistente virtual conectado ao Langflow. Como posso ajudá-lo hoje?' 
-        : 'Olá! Para usar o assistente com Langflow, configure a URL e chave da API nas configurações.',
+        : 'Olá! Para usar o assistente com Langflow, configure as variáveis de ambiente (.env).',
       isUser: false,
       timestamp: new Date()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [showConfigInput, setShowConfigInput] = useState(false);
-  const [baseUrl, setBaseUrl] = useState('');
-  const [apiKey, setApiKey] = useState('');
   const [connectionStatus, setConnectionStatus] = useState<'unknown' | 'connected' | 'disconnected'>('unknown');
 
   useEffect(() => {
@@ -116,7 +113,7 @@ export const Chat: React.FC<ChatProps> = ({ isOpen, onClose }) => {
         
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
-          text: `Recebi sua mensagem: "${userMessage.text}". Para respostas do Langflow, configure a URL e chave da API.`,
+          text: `Recebi sua mensagem: "${userMessage.text}". Para respostas do Langflow, configure as variáveis de ambiente (.env).`,
           isUser: false,
           timestamp: new Date()
         };
@@ -129,7 +126,7 @@ export const Chat: React.FC<ChatProps> = ({ isOpen, onClose }) => {
       
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: `Erro de conexão: ${error instanceof Error ? error.message : 'Erro desconhecido'}. Verifique as configurações do Langflow.`,
+        text: `Erro de conexão: ${error instanceof Error ? error.message : 'Erro desconhecido'}. Verifique as variáveis de ambiente (.env).`,
         isUser: false,
         timestamp: new Date()
       };
@@ -139,39 +136,6 @@ export const Chat: React.FC<ChatProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleConfigSubmit = async () => {
-    if (baseUrl.trim() && apiKey.trim()) {
-      langflowService.setConfig(baseUrl.trim(), apiKey.trim());
-      setShowConfigInput(false);
-      setBaseUrl('');
-      setApiKey('');
-      
-      // Testar conexão
-      setConnectionStatus('unknown');
-      try {
-        const isConnected = await langflowService.testConnection();
-        setConnectionStatus(isConnected ? 'connected' : 'disconnected');
-        
-        // Atualizar mensagem inicial
-        setMessages([{
-          id: '1',
-          text: isConnected 
-            ? 'Langflow configurado e conectado! Como posso ajudá-lo?' 
-            : 'Langflow configurado, mas não foi possível conectar. Verifique as configurações.',
-          isUser: false,
-          timestamp: new Date()
-        }]);
-      } catch (error) {
-        setConnectionStatus('disconnected');
-        setMessages([{
-          id: '1',
-          text: 'Erro ao conectar com Langflow. Verifique as configurações.',
-          isUser: false,
-          timestamp: new Date()
-        }]);
-      }
-    }
-  };
 
   const testConnection = async () => {
     if (langflowService.isConfigured()) {
@@ -227,15 +191,6 @@ export const Chat: React.FC<ChatProps> = ({ isOpen, onClose }) => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setShowConfigInput(!showConfigInput)}
-            className="text-white hover:bg-white/20"
-            title="Configurar Langflow"
-          >
-            <Settings className="w-4 h-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
             onClick={onClose}
             className="text-white hover:bg-white/20"
           >
@@ -244,56 +199,6 @@ export const Chat: React.FC<ChatProps> = ({ isOpen, onClose }) => {
         </div>
       </div>
 
-      {/* Langflow Configuration */}
-      {showConfigInput && (
-        <div className="p-4 border-b bg-gray-50">
-          <div className="space-y-3">
-            <div>
-              <label className="text-sm font-medium text-gray-700">
-                URL Base do Langflow
-              </label>
-              <Input
-                value={baseUrl}
-                onChange={(e) => setBaseUrl(e.target.value)}
-                placeholder="http://localhost:7860 ou https://seu-langflow.com"
-                className="mt-1"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-700">
-                Chave da API
-              </label>
-              <Input
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="Sua chave da API Langflow"
-                className="mt-1"
-              />
-            </div>
-            <div className="flex space-x-2">
-              <Button
-                onClick={handleConfigSubmit}
-                size="sm"
-                disabled={!baseUrl.trim() || !apiKey.trim()}
-                className="flex-1"
-              >
-                Configurar
-              </Button>
-              <Button
-                onClick={() => setShowConfigInput(false)}
-                variant="outline"
-                size="sm"
-              >
-                Cancelar
-              </Button>
-            </div>
-            <p className="text-xs text-gray-500">
-              As configurações são armazenadas apenas localmente. Certifique-se de que seu Langflow está rodando e acessível.
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Messages */}
       <ScrollArea ref={messagesRef} className="flex-1 p-4">
