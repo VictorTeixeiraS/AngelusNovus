@@ -10,6 +10,7 @@ import { SettingsScreen } from "@/components/screens/SettingsScreen";
 import { I18nextProvider } from 'react-i18next';
 import i18n from '@/services/LocalizationService';
 import NotFound from "./pages/NotFound";
+import { VirtualAssistant } from "@/components/VirtualAssistant";
 import { useEffect, useState } from "react";
 
 const queryClient = new QueryClient();
@@ -47,6 +48,7 @@ const App = () => {
                 <Route path="/settings" element={<SettingsScreen />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              <VirtualAssistant />
             </GameProvider>
           </BrowserRouter>
         </TooltipProvider>
