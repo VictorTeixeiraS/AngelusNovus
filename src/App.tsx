@@ -48,7 +48,10 @@ const App = () => {
                 <Route path="/settings" element={<SettingsScreen />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
+<<<<<<< HEAD
               <VirtualAssistant />
+=======
+>>>>>>> main
             </GameProvider>
           </BrowserRouter>
         </TooltipProvider>
