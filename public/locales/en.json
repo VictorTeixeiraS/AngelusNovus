@@ -1,0 +1,34 @@
+{
+  "home": {
+    "title": "Farm Navigators",
+    "subtitle": "The Card Game",
+    "tagline": "Make decisions that shape the future of farming",
+    "play": "Start Game",
+    "continue": "Continue",
+    "settings": "Settings",
+    "about": "About"
+  },
+  "game": {
+    "turn": "Turn {{turn}}",
+    "dataSource": "Data Source",
+    "swipeLeft": "Swipe left or right to decide",
+    "pillars": {
+      "economy": "Economy",
+      "sustainability": "Sustainability",
+      "technology": "Technology",
+      "people": "People"
+    }
+  },
+  "result": {
+    "success": "Success!",
+    "failure": "Game Over",
+    "restart": "Play Again",
+    "menu": "Main Menu"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "sound": "Sound",
+    "reset": "Reset Progress"
+  }
+}
