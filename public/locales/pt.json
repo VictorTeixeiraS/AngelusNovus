@@ -1,0 +1,34 @@
+{
+  "home": {
+    "title": "Farm Navigators",
+    "subtitle": "O Jogo de Cartas",
+    "tagline": "Tome decisões que moldam o futuro da agricultura",
+    "play": "Começar Jogo",
+    "continue": "Continuar",
+    "settings": "Configurações",
+    "about": "Sobre"
+  },
+  "game": {
+    "turn": "Turno {{turn}}",
+    "dataSource": "Fonte de Dados",
+    "swipeLeft": "Deslize para a esquerda ou direita para decidir",
+    "pillars": {
+      "economy": "Economia",
+      "sustainability": "Sustentabilidade",
+      "technology": "Tecnologia",
+      "people": "Pessoas"
+    }
+  },
+  "result": {
+    "success": "Sucesso!",
+    "failure": "Fim de Jogo",
+    "restart": "Jogar Novamente",
+    "menu": "Menu Principal"
+  },
+  "settings": {
+    "title": "Configurações",
+    "language": "Idioma",
+    "sound": "Som",
+    "reset": "Resetar Progresso"
+  }
+}
