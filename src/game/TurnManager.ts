@@ -3,7 +3,7 @@ import { GameState, Card, PillarImpact, TurnHistory, ImpactValue } from '@/types
 export class TurnManager {
   private static readonly WIN_THRESHOLD = 15;
   private static readonly LOSE_THRESHOLD = -15;
-  private static readonly MAX_TURNS = 25;
+  private static readonly MAX_TURNS = 4;
   private static readonly PILLAR_MAX = 20;
   private static readonly PILLAR_MIN = -20;
 

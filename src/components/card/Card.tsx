@@ -4,6 +4,7 @@ import { useSwipe } from '@/hooks/useSwipe';
 import { Database, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import { DataVisualizationCard } from './DataVisualizationCard';
 
 interface CardProps {
   card: CardType;
@@ -24,7 +25,17 @@ export const Card: React.FC<CardProps> = ({ card, onDecision }) => {
   const showRightHint = swipeState.offsetX > 20;
 
   return (
-    <div className="relative w-full max-w-sm mx-auto">
+    <div className="w-full max-w-6xl mx-auto px-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        {/* Data Visualization Card (Left) */}
+        {card.nasaGranule && (
+          <div className="order-2 lg:order-1">
+            <DataVisualizationCard granule={card.nasaGranule} />
+          </div>
+        )}
+
+        {/* Game Decision Card (Right) */}
+        <div className={`relative order-1 lg:order-2 ${!card.nasaGranule ? 'lg:col-span-2 max-w-sm mx-auto' : ''}`}>
       {/* Hint indicators */}
       {showLeftHint && (
         <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 z-10">
@@ -108,6 +119,8 @@ export const Card: React.FC<CardProps> = ({ card, onDecision }) => {
             {card.options[1].label}
             <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
+        </div>
+      </div>
         </div>
       </div>
     </div>

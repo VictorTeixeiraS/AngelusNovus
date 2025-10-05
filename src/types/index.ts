@@ -15,6 +15,34 @@ export interface Option {
   resultText: string;
 }
 
+export interface NASAGranule {
+  granuleUr: string;
+  title: string;
+  dataCenter: string;
+  granuleSize: number;
+  timeStart: string;
+  timeEnd: string;
+  relatedUrls: Array<{
+    url: string;
+    type: string;
+    description?: string;
+  }>;
+  spatialExtent?: {
+    horizontalSpatialDomain?: {
+      geometry?: {
+        gpolygons?: Array<{
+          boundary: {
+            points: Array<{
+              longitude: number;
+              latitude: number;
+            }>;
+          };
+        }>;
+      };
+    };
+  };
+}
+
 export interface Card {
   id: string;
   title: string;
@@ -27,6 +55,7 @@ export interface Card {
     left: PillarImpact;
   };
   education: string;
+  nasaGranule?: NASAGranule;
   metadata?: {
     probability?: number;
     region?: string;
@@ -34,22 +63,13 @@ export interface Card {
 }
 
 export interface GameState {
+  earth: any;
   turn: number;
   pillars: PillarImpact;
   history: TurnHistory[];
   gameOver: boolean;
   gameResult?: 'win' | 'lose';
   language: 'en' | 'pt';
-  earthIndex: number;
-  scoreboard: ScoreboardEntry[];
-}
-
-export interface ScoreboardEntry {
-  name: string;
-  nationFlag: string;
-  score: number;
-  earthIndex: number;
-  date: string;
 }
 
 export interface TurnHistory {

@@ -19,7 +19,7 @@ export const Character: React.FC<CharacterProps> = ({ onClick, isChatOpen }) => 
       }}
     >
       <img
-        src="/src/assets/little-eliot.png"
+        src="little-eliot.png"
         alt="Little Eliot"
         style={{
           width: '120px',
