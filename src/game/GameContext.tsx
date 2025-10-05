@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
-import { GameState, Card } from '@/types';
+import { GameState, Card, ScoreboardEntry } from '@/types';
 import { DeckManager } from './DeckManager';
 import { TurnManager } from './TurnManager';
 import { SaveGameService } from '@/services/SaveGameService';
@@ -12,6 +12,7 @@ interface GameContextType {
   loadGame: () => boolean;
   makeDecision: (decision: 'left' | 'right') => void;
   resetGame: () => void;
+  saveScore: (entry: ScoreboardEntry) => void;
 }
 
 const initialGameState: GameState = {
@@ -24,7 +25,9 @@ const initialGameState: GameState = {
   },
   history: [],
   gameOver: false,
-  language: 'en'
+  language: 'en',
+  earthIndex: 1.75,
+  scoreboard: [],
 };
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -34,8 +37,20 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [currentCard, setCurrentCard] = useState<Card | null>(null);
   const [deckManager] = useState(() => new DeckManager());
 
+  const saveScore = (entry: ScoreboardEntry) => {
+    setGameState(prevState => {
+      const newScoreboard = [...prevState.scoreboard, entry];
+      const newState = { ...prevState, scoreboard: newScoreboard };
+      SaveGameService.save(newState);
+      return newState;
+    });
+  };
+
   const drawNextCard = useCallback(() => {
     const card = deckManager.drawCard();
+    if (!card) {
+      console.log('[GameContext] No card available to draw');
+    }
     setCurrentCard(card);
     return card;
   }, [deckManager]);
@@ -43,9 +58,12 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const startNewGame = useCallback(() => {
     console.log('[GameContext] Starting new game');
     deckManager.reset();
-    setGameState(initialGameState);
+    // Preserve scoreboard from previous games
+    const currentScoreboard = gameState.scoreboard || [];
+    const newState = { ...initialGameState, scoreboard: currentScoreboard };
+    setGameState(newState);
     drawNextCard();
-  }, [deckManager, drawNextCard]);
+  }, [deckManager, drawNextCard, gameState.scoreboard]);
 
   const loadGame = useCallback((): boolean => {
     const savedState = SaveGameService.load();
@@ -58,51 +76,87 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return false;
   }, [drawNextCard]);
 
-  const makeDecision = useCallback((decision: 'left' | 'right') => {
-    if (!currentCard || gameState.gameOver) return;
+  const makeDecision = (decision: 'left' | 'right') => {
+    if (currentCard) {
+      console.log('[GameContext] Making decision:', decision, 'Turn:', gameState.turn);
+      
+      // Discard the current card before processing
+      deckManager.discard(currentCard);
+      
+      const impact = decision === 'left' ? currentCard.impacts.left : currentCard.impacts.right;
+      const newState = TurnManager.processTurn(gameState, currentCard, decision);
+      
+      // Calculate earthIndex change based on sustainability impact
+      // Negative sustainability increases earth consumption
+      const sustainabilityImpact = impact.sustainability;
+      const earthIndexChange = sustainabilityImpact < 0 ? Math.abs(sustainabilityImpact) * 0.03 : -sustainabilityImpact * 0.01;
+      
+      const updatedState = {
+        ...newState,
+        earthIndex: Math.max(1.0, Math.min(5.0, newState.earthIndex + earthIndexChange)),
+      };
 
-    console.log('[GameContext] Decision made:', decision);
-    
-    // Discard current card
-    deckManager.discard(currentCard);
+      console.log('[GameContext] State updated:', {
+        turn: updatedState.turn,
+        earthIndex: updatedState.earthIndex.toFixed(2),
+        sustainabilityImpact,
+        earthIndexChange: earthIndexChange.toFixed(3),
+        gameOver: updatedState.gameOver
+      });
 
-    // Process turn and update state
-    const newState = TurnManager.processTurn(gameState, currentCard, decision);
-    setGameState(newState);
-
-    // Save game
-    SaveGameService.save(newState);
-
-    // Draw next card if game continues
-    if (!newState.gameOver) {
-      setTimeout(() => {
-        drawNextCard();
-      }, 300);
+      setGameState(updatedState);
+      SaveGameService.save(updatedState);
+      
+      if (updatedState.gameOver) {
+        console.log('[GameContext] Game Over!', updatedState.gameResult);
+        setCurrentCard(null);
+      } else {
+        const nextCard = deckManager.drawCard();
+        console.log('[GameContext] Drawing next card:', nextCard?.id);
+        
+        // If no more cards available, end the game
+        if (!nextCard) {
+          console.log('[GameContext] No more cards available - ending game');
+          const finalState = {
+            ...updatedState,
+            gameOver: true,
+            gameResult: 'win' as const // Player survived all cards!
+          };
+          setGameState(finalState);
+          SaveGameService.save(finalState);
+          setCurrentCard(null);
+        } else {
+          setCurrentCard(nextCard);
+        }
+      }
     } else {
-      setCurrentCard(null);
+      console.warn('[GameContext] makeDecision called but no current card');
     }
-  }, [currentCard, gameState, deckManager, drawNextCard]);
+  };
 
-  const resetGame = useCallback(() => {
+  const resetGame = () => {
+    console.log('[GameContext] Resetting game');
+    // Preserve the scoreboard when resetting
+    const currentScoreboard = gameState.scoreboard;
     SaveGameService.clearSave();
-    startNewGame();
-  }, [startNewGame]);
+    deckManager.reset();
+    const newState = { ...initialGameState, scoreboard: currentScoreboard };
+    setGameState(newState);
+    drawNextCard();
+  };
 
-  return (
-    <GameContext.Provider
-      value={{
-        gameState,
-        currentCard,
-        deckManager,
-        startNewGame,
-        loadGame,
-        makeDecision,
-        resetGame
-      }}
-    >
-      {children}
-    </GameContext.Provider>
-  );
+  const contextValue: GameContextType = {
+    gameState,
+    currentCard,
+    deckManager,
+    startNewGame,
+    loadGame,
+    makeDecision,
+    resetGame,
+    saveScore,
+  };
+
+  return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;
 };
 
 export const useGame = () => {

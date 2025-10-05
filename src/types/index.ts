@@ -1,6 +1,6 @@
 export type PillarType = 'economy' | 'sustainability' | 'technology' | 'people';
 
-export type ImpactValue = -2 | -1 | 0 | 1 | 2;
+export type ImpactValue = number;
 
 export interface PillarImpact {
   economy: ImpactValue;
@@ -40,6 +40,16 @@ export interface GameState {
   gameOver: boolean;
   gameResult?: 'win' | 'lose';
   language: 'en' | 'pt';
+  earthIndex: number;
+  scoreboard: ScoreboardEntry[];
+}
+
+export interface ScoreboardEntry {
+  name: string;
+  nationFlag: string;
+  score: number;
+  earthIndex: number;
+  date: string;
 }
 
 export interface TurnHistory {

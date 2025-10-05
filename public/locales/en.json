@@ -10,6 +10,8 @@
   },
   "game": {
     "turn": "Turn {{turn}}",
+    "rounds": "Rounds",
+    "earthIndex": "Earth Index",
     "dataSource": "Data Source",
     "swipeLeft": "Swipe left or right to decide",
     "pillars": {
@@ -18,6 +20,27 @@
       "technology": "Technology",
       "people": "People"
     }
+  },
+  "gameOver": {
+    "title": "Game Over!",
+    "description": "Your final score is {{score}} with an Earth Index of {{earthIndex}}. Humanity is consuming natural resources at {{earthIndex}}x the rate Earth can regenerate!",
+    "name": "Name",
+    "nationFlag": "Nation Flag",
+    "saveScore": "Save Score",
+    "playAgain": "Play Again",
+    "earthIndexInfo": "The Earth Index measures how fast we consume resources compared to Earth's regeneration capacity. Current global average is 1.75 Earths.",
+    "roundsPlayed": "Rounds Played",
+    "finalScore": "Final Score",
+    "turnsTaken": "Turns Taken"
+  },
+  "scoreboard": {
+    "title": "Leaderboard",
+    "rank": "Rank",
+    "name": "Name",
+    "nation": "Nation",
+    "score": "Score",
+    "earthIndex": "Earth Index",
+    "date": "Date"
   },
   "result": {
     "success": "Success!",

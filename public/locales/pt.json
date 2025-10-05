@@ -10,6 +10,8 @@
   },
   "game": {
     "turn": "Turno {{turn}}",
+    "rounds": "Rodadas",
+    "earthIndex": "Índice Terra",
     "dataSource": "Fonte de Dados",
     "swipeLeft": "Deslize para a esquerda ou direita para decidir",
     "pillars": {
@@ -18,6 +20,27 @@
       "technology": "Tecnologia",
       "people": "Pessoas"
     }
+  },
+  "gameOver": {
+    "title": "Fim de Jogo!",
+    "description": "Sua pontuação final é {{score}} com um Índice Terra de {{earthIndex}}. A humanidade está consumindo recursos naturais a {{earthIndex}}x a taxa que a Terra consegue regenerar!",
+    "name": "Nome",
+    "nationFlag": "Bandeira do País",
+    "saveScore": "Salvar Pontuação",
+    "playAgain": "Jogar Novamente",
+    "earthIndexInfo": "O Índice Terra mede quão rápido consumimos recursos comparado à capacidade de regeneração da Terra. A média global atual é 1.75 Terras.",
+    "roundsPlayed": "Rodadas Jogadas",
+    "finalScore": "Pontuação Final",
+    "turnsTaken": "Turnos Realizados"
+  },
+  "scoreboard": {
+    "title": "Placar de Líderes",
+    "rank": "Posição",
+    "name": "Nome",
+    "nation": "País",
+    "score": "Pontuação",
+    "earthIndex": "Índice Terra",
+    "date": "Data"
   },
   "result": {
     "success": "Sucesso!",
