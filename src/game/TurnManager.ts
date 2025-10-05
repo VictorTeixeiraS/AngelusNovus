@@ -1,9 +1,11 @@
 import { GameState, Card, PillarImpact, TurnHistory, ImpactValue } from '@/types';
 
 export class TurnManager {
-  private static readonly WIN_THRESHOLD = 10;
-  private static readonly LOSE_THRESHOLD = -10;
-  private static readonly MAX_TURNS = 20;
+  private static readonly WIN_THRESHOLD = 15;
+  private static readonly LOSE_THRESHOLD = -15;
+  private static readonly MAX_TURNS = 25;
+  private static readonly PILLAR_MAX = 20;
+  private static readonly PILLAR_MIN = -20;
 
   static applyImpact(currentPillars: PillarImpact, impact: PillarImpact): PillarImpact {
     return {
@@ -15,7 +17,7 @@ export class TurnManager {
   }
 
   private static clampPillar(value: number): ImpactValue {
-    return Math.max(-10, Math.min(10, value)) as ImpactValue;
+    return Math.max(this.PILLAR_MIN, Math.min(this.PILLAR_MAX, value));
   }
 
   static checkGameOver(gameState: GameState): { isOver: boolean; result?: 'win' | 'lose' } {

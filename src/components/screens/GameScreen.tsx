@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useGame } from '@/game/GameContext';
 import { Card } from '@/components/card/Card';
 import { StatBar } from '@/components/ui/StatBar';
@@ -6,49 +6,25 @@ import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { Home, RotateCcw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { GameOverScreen } from './GameOverScreen';
 
 export const GameScreen: React.FC = () => {
   const { gameState, currentCard, makeDecision, resetGame, startNewGame } = useGame();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const initialized = useRef(false);
 
   useEffect(() => {
-    if (!currentCard && !gameState.gameOver) {
+    // Only initialize game once on mount if there's no card and no game over
+    if (!initialized.current && !currentCard && !gameState.gameOver) {
+      console.log('[GameScreen] Initializing game');
       startNewGame();
+      initialized.current = true;
     }
-  }, [currentCard, gameState.gameOver, startNewGame]);
+  }, []);
 
   if (gameState.gameOver) {
-    return (
-      <div className="min-h-screen bg-game-bg flex items-center justify-center p-4">
-        <div className="text-center max-w-md">
-          <h1 className="text-4xl font-bold mb-4">
-            {gameState.gameResult === 'win' ? '🎉 ' + t('result.success') : '💔 ' + t('result.failure')}
-          </h1>
-          
-          <div className="bg-card rounded-2xl p-6 shadow-lg mb-6">
-            <h2 className="text-xl font-semibold mb-4">Final Scores</h2>
-            <div className="space-y-3">
-              <StatBar pillar="economy" value={gameState.pillars.economy} />
-              <StatBar pillar="sustainability" value={gameState.pillars.sustainability} />
-              <StatBar pillar="technology" value={gameState.pillars.technology} />
-              <StatBar pillar="people" value={gameState.pillars.people} />
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <Button onClick={resetGame} className="flex-1">
-              <RotateCcw className="w-4 h-4 mr-2" />
-              {t('result.restart')}
-            </Button>
-            <Button variant="outline" onClick={() => navigate('/')} className="flex-1">
-              <Home className="w-4 h-4 mr-2" />
-              {t('result.menu')}
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
+    return <GameOverScreen />;
   }
 
   if (!currentCard) {
@@ -73,8 +49,13 @@ export const GameScreen: React.FC = () => {
             Menu
           </Button>
           
-          <div className="text-sm font-medium bg-card px-4 py-2 rounded-full shadow-sm">
-            {t('game.turn', { turn: gameState.turn })}
+          <div className="flex gap-2">
+            <div className="text-sm font-medium bg-card px-4 py-2 rounded-full shadow-sm">
+              {t('game.turn', { turn: gameState.turn })}
+            </div>
+            <div className="text-sm font-medium bg-card px-4 py-2 rounded-full shadow-sm">
+               {t('game.earthIndex')}: {gameState.earthIndex.toFixed(2)}
+            </div>
           </div>
         </div>
 

@@ -25,7 +25,8 @@ const pillarColors: Record<PillarType, string> = {
 
 export const StatBar: React.FC<StatBarProps> = ({ pillar, value, showLabel = true }) => {
   const { t } = useTranslation();
-  const percentage = ((value + 10) / 20) * 100;
+  // Map value from -20 to +20 range to 0-100%
+  const percentage = ((value + 20) / 40) * 100;
   const isPositive = value > 0;
   const isNegative = value < 0;
 
