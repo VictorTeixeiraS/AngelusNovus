@@ -3,6 +3,8 @@ import { GameState, Card, ScoreboardEntry } from '@/types';
 import { DeckManager } from './DeckManager';
 import { TurnManager } from './TurnManager';
 import { SaveGameService } from '@/services/SaveGameService';
+import { langflowService } from '@/services/LangflowService';
+import { useSpeechBubble } from '@/contexts/SpeechBubbleContext';
 
 interface GameContextType {
   gameState: GameState;
@@ -36,6 +38,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   const [currentCard, setCurrentCard] = useState<Card | null>(null);
   const [deckManager] = useState(() => new DeckManager());
+  const { showBubble } = useSpeechBubble();
 
   const saveScore = (entry: ScoreboardEntry) => {
     setGameState(prevState => {
@@ -103,6 +106,56 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         earthIndexChange: earthIndexChange.toFixed(3),
         gameOver: updatedState.gameOver
       });
+    console.log('[GameContext] Decision made:', decision);
+    
+    // Fazer requisição para Langflow usando a função já pronta
+    if (langflowService.isConfigured()) {
+      const gameStatus = {
+        turn: gameState.turn,
+        pillars: gameState.pillars,
+        gameOver: gameState.gameOver,
+        history: gameState.history.length
+      };
+      
+      const cardDetails = {
+        id: currentCard.id,
+        title: currentCard.title,
+        description: currentCard.description,
+        question: currentCard.question,
+        dataSource: currentCard.dataSource,
+        education: currentCard.education,
+        options: currentCard.options.map(opt => ({
+          label: opt.label,
+          resultText: opt.resultText
+        }))
+      };
+      
+      const actionDetails = {
+        decision: decision,
+        timestamp: new Date().toISOString(),
+        turnNumber: gameState.turn
+      };
+      
+      const message = JSON.stringify({
+        game_status: gameStatus,
+        card_details: cardDetails,
+        action_details: actionDetails
+      });
+      
+      // Enviar mensagem e mostrar resposta no balão
+      langflowService.sendMessage(message)
+        .then(response => {
+          // Mostrar resposta no balão de fala (permanece até ser clicada)
+          showBubble(response);
+        })
+        .catch(error => {
+          console.warn('Erro ao enviar mensagem para Langflow:', error);
+          showBubble('Ops! Não consegui processar sua decisão. Tente novamente!');
+        });
+    }
+    
+    // Discard current card
+    deckManager.discard(currentCard);
 
       setGameState(updatedState);
       SaveGameService.save(updatedState);

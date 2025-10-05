@@ -28,17 +28,15 @@ Crie um arquivo `.env` na raiz do projeto:
 
 ```env
 VITE_LANGFLOW_BASE_URL=http://localhost:7860
-VITE_LANGFLOW_API_KEY=sua-chave-aqui
+VITE_LANGFLOW_API_KEY=sua-chave-da-api-aqui
+VITE_LANGFLOW_FLOW_ID=seu-flow-id-aqui
 ```
 
-#### Opção 2: Interface do Chat
+#### Opção 2: Teste de Conexão
 
 1. Clique no personagem para abrir o chat
-2. Clique no ícone de configurações (engrenagem) no header
-3. Digite a URL base do Langflow (ex: `http://localhost:7860`)
-4. Digite sua chave da API do Langflow
-5. Clique em "Configurar"
-6. Use o botão de teste de conexão para verificar se está funcionando
+2. Use o botão de teste de conexão (ícone WiFi) para verificar se está funcionando
+3. O status da conexão será exibido no header do chat
 
 ## Como Usar
 
