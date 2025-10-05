@@ -19,24 +19,79 @@ export const sampleCards: Card[] = [
         resultText: 'Crops survived but water reserves depleted'
       }
     ],
+    // Impact values range from -2 to 2 representing negative to positive effects
     impacts: {
       left: {
-        economy: -1,
-        sustainability: 2,
-        technology: 0,
-        people: -1
+        economy: -1,        // Minor economic loss due to reduced yield
+        sustainability: 2,  // Major sustainability gain by conserving water
+        technology: 0,      // No tech impact
+        people: -1          // Minor negative impact on farmers' immediate needs
       },
       right: {
-        economy: 1,
-        sustainability: -2,
-        technology: 0,
-        people: 1
+        economy: 1,         // Short-term economic gain from saved crops
+        sustainability: -2, // Major sustainability loss from depleting reserves
+        technology: 0,      // No tech impact
+        people: 1           // Minor positive impact on immediate livelihoods
       }
     },
+    // Educational content about the NASA data source
     education: 'SMAP satellites monitor soil moisture globally, helping farmers make informed irrigation decisions.',
+    // Actual NASA granule data for this scenario
+    nasaGranule: {
+      granuleUr: 'NCALDAS_NOAH0125_D.A20161231.002.nc4',
+      title: 'NCALDAS_NOAH0125_D.2.0:NCALDAS_NOAH0125_D.A20161231.002.nc4',
+      dataCenter: 'GES_DISC',
+      granuleSize: 12.637405395507812,
+      timeStart: '2016-12-31T00:00:00.000Z',
+      timeEnd: '2016-12-31T23:59:59.000Z',
+      // URLs to access actual data and related resources
+      relatedUrls: [
+        {
+          url: 'https://data.gesdisc.earthdata.nasa.gov/data/NCALDAS/NCALDAS_NOAH0125_D.2.0/2016/12/NCALDAS_NOAH0125_D.A20161231.002.nc4',
+          type: 'GET DATA',
+          description: 'Download NCALDAS_NOAH0125_D.A20161231.002.nc4'
+        },
+        {
+          url: 's3://gesdisc-cumulus-prod-protected/NCALDAS/NCALDAS_NOAH0125_D.2.0/2016/12/NCALDAS_NOAH0125_D.A20161231.002.nc4',
+          type: 'GET DATA VIA DIRECT ACCESS',
+          description: 'This link provides direct download access via S3 to the granule'
+        },
+        {
+          url: 'https://hydro1.gesdisc.eosdis.nasa.gov/opendap/NCALDAS/NCALDAS_NOAH0125_D.2.0/2016/12/NCALDAS_NOAH0125_D.A20161231.002.nc4',
+          type: 'USE SERVICE API',
+          description: 'The OPENDAP location for the granule.'
+        },
+        {
+          url: 'https://data.gesdisc.earthdata.nasa.gov/s3credentials',
+          type: 'VIEW RELATED INFORMATION',
+          description: 'API endpoint to retrieve temporary credentials valid for same-region direct s3 access'
+        }
+      ],
+      // Geographic coverage of the data
+      spatialExtent: {
+        horizontalSpatialDomain: {
+          geometry: {
+            gpolygons: [
+              {
+                boundary: {
+                  points: [
+                    { longitude: -125, latitude: 25 },
+                    { longitude: -67, latitude: 25 },
+                    { longitude: -67, latitude: 53 },
+                    { longitude: -125, latitude: 53 },
+                    { longitude: -125, latitude: 25 }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    // Additional metadata for game mechanics
     metadata: {
-      probability: 0.3,
-      region: 'Arid zones'
+      probability: 0.3,    // 30% chance of this card appearing
+      region: 'Arid zones'  // Geographic context for the scenario
     }
   },
   {
@@ -57,23 +112,69 @@ export const sampleCards: Card[] = [
         resultText: 'Higher upfront cost, optimized yields'
       }
     ],
+    // Impact values for each decision option
     impacts: {
       left: {
-        economy: 1,
-        sustainability: -1,
-        technology: -1,
-        people: 0
+        economy: 1,         // Short-term economic gain from cost savings
+        sustainability: -1, // Minor sustainability loss from over-fertilization
+        technology: -1,     // Tech progress hindered
+        people: 0           // Neutral impact on people
       },
       right: {
-        economy: -1,
-        sustainability: 2,
-        technology: 2,
-        people: 1
+        economy: -1,        // Initial economic cost
+        sustainability: 2,  // Major sustainability gain through efficient resource use
+        technology: 2,      // Significant technological advancement
+        people: 1           // Minor benefit to workers and community
       }
     },
     education: 'MODIS helps monitor crop health through vegetation indices, enabling targeted interventions.',
+    // NASA granule information for this scenario
+    nasaGranule: {
+      granuleUr: 'MOD11A1.A2025262.h13v11.061.2025263214912',
+      title: 'MOD11A1.A2025262.h13v11.061.2025263214912',
+      dataCenter: 'LPCLOUD',
+      granuleSize: 3.363279342651367,
+      timeStart: '2025-09-19T00:00:00.000Z',
+      timeEnd: '2025-09-19T23:59:59.000Z',
+      relatedUrls: [
+        {
+          url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11A1.061/MOD11A1.A2025262.h13v11.061.2025263214912/MOD11A1.A2025262.h13v11.061.2025263214912.hdf',
+          type: 'GET DATA',
+          description: 'Download MOD11A1.A2025262.h13v11.061.2025263214912.hdf'
+        },
+        {
+          url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD11A1.061/MOD11A1.A2025262.h13v11.061.2025263214912/BROWSE.MOD11A1.A2025262.h13v11.061.2025263214915.1.jpg',
+          type: 'GET RELATED VISUALIZATION',
+          description: 'Browse image 1'
+        },
+        {
+          url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD11A1.061/MOD11A1.A2025262.h13v11.061.2025263214912/BROWSE.MOD11A1.A2025262.h13v11.061.2025263214915.2.jpg',
+          type: 'GET RELATED VISUALIZATION',
+          description: 'Browse image 2'
+        }
+      ],
+      spatialExtent: {
+        horizontalSpatialDomain: {
+          geometry: {
+            gpolygons: [
+              {
+                boundary: {
+                  points: [
+                    { longitude: -57.735, latitude: -30 },
+                    { longitude: -45.9945, latitude: -30.0223 },
+                    { longitude: -42.3891, latitude: -19.9283 },
+                    { longitude: -53.202, latitude: -19.9071 },
+                    { longitude: -57.735, latitude: -30 }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
     metadata: {
-      probability: 0.5,
+      probability: 0.5,     // 50% chance of appearing
       region: 'Agricultural zones'
     }
   },
@@ -95,23 +196,80 @@ export const sampleCards: Card[] = [
         resultText: 'Secured crops but slightly lower market value'
       }
     ],
+    // Decision impacts
     impacts: {
       left: {
-        economy: 2,
-        sustainability: 0,
-        technology: 0,
-        people: -2
+        economy: 2,        // High potential economic gain if weather forecast is wrong
+        sustainability: 0, // No sustainability impact
+        technology: 0,     // No technology impact
+        people: -2         // High risk to farmers if crops are destroyed
       },
       right: {
-        economy: -1,
-        sustainability: 1,
-        technology: 1,
-        people: 2
+        economy: -1,       // Small economic loss from lower quality harvest
+        sustainability: 1, // Small sustainability gain from reducing potential waste
+        technology: 1,     // Small tech gain from utilizing forecasting
+        people: 2          // Major benefit to people by securing food supply
       }
     },
     education: 'GPM provides real-time precipitation data, crucial for planning harvest timing.',
+    // NASA granule data for Global Precipitation Measurement
+    nasaGranule: {
+    granuleUr: '3B-HHR.MS.MRG.3IMERG.20250531-S233000-E235959.1410.V07B.HDF5',
+    title: 'GPM_3IMERGHH.07:3B-HHR.MS.MRG.3IMERG.20250531-S233000-E235959.1410.V07B.HDF5',
+    dataCenter: 'GES_DISC',
+    granuleSize: 7.896713256835938,
+    timeStart: '2025-05-31T23:30:00.000Z',
+    timeEnd: '2025-05-31T23:59:59.999Z',
+    relatedUrls: [
+      {
+        url: 'https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGHH.07/2025/151/3B-HHR.MS.MRG.3IMERG.20250531-S233000-E235959.1410.V07B.HDF5',
+        type: 'GET DATA',
+        description: 'Download 3B-HHR.MS.MRG.3IMERG.20250531-S233000-E235959.1410.V07B.HDF5'
+      },
+      {
+        url: 's3://gesdisc-cumulus-prod-protected/GPM_L3/GPM_3IMERGHH.07/2025/151/3B-HHR.MS.MRG.3IMERG.20250531-S233000-E235959.1410.V07B.HDF5',
+        type: 'GET DATA VIA DIRECT ACCESS',
+        description: 'This link provides direct download access via S3 to the granule'
+      },
+      {
+        url: 'https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGHH.07/2025/151/3B-HHR.MS.MRG.3IMERG.20250531-S233000-E235959.1410.V07B.HDF5',
+        type: 'USE SERVICE API',
+        description: 'The OPENDAP location for the granule.'
+      },
+      {
+        url: 'https://data.gesdisc.earthdata.nasa.gov/s3credentials',
+        type: 'VIEW RELATED INFORMATION',
+        description: 'API endpoint to retrieve temporary credentials for S3 access'
+      },
+      {
+        url: 'https://docserver.gesdisc.eosdis.nasa.gov/public/project/Images/GPCPDAY_V33.png',
+        type: 'GET RELATED VISUALIZATION',
+        description: 'GPCP Daily Precipitation - Visualization Image'
+      }
+    ],
+    // Global coverage for this precipitation data
+    spatialExtent: {
+      horizontalSpatialDomain: {
+        geometry: {
+          gpolygons: [
+            {
+              boundary: {
+                points: [
+                  { longitude: -180, latitude: -90 },
+                  { longitude: 180, latitude: -90 },
+                  { longitude: 180, latitude: 90 },
+                  { longitude: -180, latitude: 90 },
+                  { longitude: -180, latitude: -90 }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
     metadata: {
-      probability: 0.7,
+      probability: 0.7,    // 70% chance of appearing
       region: 'Tropical zones'
     }
   },
@@ -127,27 +285,94 @@ export const sampleCards: Card[] = [
         label: 'Adjust Schedules',
         resultText: 'Reduced health risks, but increased labor costs'
       },
-      {
-        id: 'opt-004-right',
-        label: 'Maintain Hours',
-        resultText: 'Saved money, but workers’ health impacted'
-      }
     ],
+    // Impact values
     impacts: {
       left: {
-        economy: -1,
-        sustainability: 2,
-        technology: 0,
-        people: 2
+        economy: -1,       // Minor economic cost from schedule adjustments
+        sustainability: 2, // Major sustainability gain from labor practices
+        technology: 0,     // No tech impact
+        people: 2          // Major benefit to worker welfare
       },
       right: {
-        economy: 2,
-        sustainability: -2,
-        technology: 0,
-        people: -2
+        economy: 2,        // Short-term economic gain
+        sustainability: -2,// Major sustainability loss through exploitative practices
+        technology: 0,     // No tech impact
+        people: -2         // Major negative impact on worker health
       }
     },
     education: 'MODIS LST detects surface temperature, helping protect worker wellbeing and plan safe labor routines.',
+    // NASA MODIS Land Surface Temperature data
+    nasaGranule: {
+    granuleUr: 'MOD11A1.A2025276.h10v06.061.2025277095431',
+    title: 'MOD11A1.A2025276.h10v06.061.2025277095431',
+    dataCenter: 'LPCLOUD',
+    granuleSize: 1.1373262405395508,
+    timeStart: '2025-10-03T00:00:00.000Z',
+    timeEnd: '2025-10-03T23:59:59.000Z',
+    relatedUrls: [
+      {
+        url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11A1.061/MOD11A1.A2025276.h10v06.061.2025277095431/MOD11A1.A2025276.h10v06.061.2025277095431.hdf',
+        type: 'GET DATA',
+        description: 'Download MOD11A1.A2025276.h10v06.061.2025277095431.hdf'
+      },
+      {
+        url: 's3://lp-prod-protected/MOD11A1.061/MOD11A1.A2025276.h10v06.061.2025277095431/MOD11A1.A2025276.h10v06.061.2025277095431.hdf',
+        type: 'GET DATA VIA DIRECT ACCESS',
+        description: 'Direct S3 access for granule file'
+      },
+      {
+        url: 'https://doi.org/10.5067/MODIS/MOD11A1.061',
+        type: 'VIEW RELATED INFORMATION',
+        description: 'Product Landing Page'
+      },
+      {
+        url: 'https://opendap.earthdata.nasa.gov/collections/C1748058432-LPCLOUD/granules/MOD11A1.A2025276.h10v06.061.2025277095431',
+        type: 'USE SERVICE API',
+        description: 'OPeNDAP API endpoint'
+      },
+      {
+        url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD11A1.061/MOD11A1.A2025276.h10v06.061.2025277095431/MOD11A1.A2025276.h10v06.061.2025277095431.cmr.xml',
+        type: 'VIEW RELATED INFORMATION',
+        description: 'Download granule metadata .xml file'
+      },
+      {
+        url: 's3://lp-prod-protected/MOD11A1.061/MOD11A1.A2025276.h10v06.061.2025277095431/MOD11A1.A2025276.h10v06.061.2025277095431.cmr.xml',
+        type: 'VIEW RELATED INFORMATION',
+        description: 'Direct S3 access for granule metadata'
+      },
+      {
+        url: 'https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials',
+        type: 'VIEW RELATED INFORMATION',
+        description: 'API for temporary S3 credentials'
+      },
+      // Visualization images for quicklook/browse
+      {
+        url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD11A1.061/MOD11A1.A2025276.h10v06.061.2025277095431/BROWSE.MOD11A1.A2025276.h10v06.061.2025277095434.1.jpg',
+        type: 'GET RELATED VISUALIZATION',
+        description: 'Browse image 1'
+      },
+    ],
+    spatialExtent: {
+      horizontalSpatialDomain: {
+        geometry: {
+          gpolygons: [
+            {
+              boundary: {
+                points: [
+                  { longitude: -85.1199, latitude: 19.8973 },
+                  { longitude: -74.213, latitude: 19.9339 },
+                  { longitude: -80.5352, latitude: 30.0384 },
+                  { longitude: -92.376, latitude: 30 },
+                  { longitude: -85.1199, latitude: 19.8973 }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
     metadata: {
       probability: 0.4,
       region: 'Temperate zones'
@@ -187,203 +412,89 @@ export const sampleCards: Card[] = [
       }
     },
     education: 'NDVI time series allow farmers to track crop health and adapt planting choices to environmental stress.',
+      nasaGranule: {
+    granuleUr: 'MOD13A1.A2025257.h10v05.061.2025275114423',
+    title: 'MOD13A1.A2025257.h10v05.061.2025275114423',
+    dataCenter: 'LPCLOUD',
+    granuleSize: 71.38634490966797,
+    timeStart: '2025-09-14T00:00:00.000Z',
+    timeEnd: '2025-09-29T23:59:59.000Z',
+    relatedUrls: [
+      {
+        url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD13A1.061/MOD13A1.A2025257.h10v05.061.2025275114423/MOD13A1.A2025257.h10v05.061.2025275114423.hdf',
+        type: 'GET DATA',
+        description: 'Download MOD13A1.A2025257.h10v05.061.2025275114423.hdf'
+      },
+      {
+        url: 's3://lp-prod-protected/MOD13A1.061/MOD13A1.A2025257.h10v05.061.2025275114423/MOD13A1.A2025257.h10v05.061.2025275114423.hdf',
+        type: 'GET DATA VIA DIRECT ACCESS',
+        description: 'Direct S3 access for granule file'
+      },
+      {
+        url: 'https://doi.org/10.5067/MODIS/MOD13A1.061',
+        type: 'VIEW RELATED INFORMATION',
+        description: 'Product Landing Page'
+      },
+      {
+        url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD13A1.061/MOD13A1.A2025257.h10v05.061.2025275114423/MOD13A1.A2025257.h10v05.061.2025275114423.cmr.xml',
+        type: 'VIEW RELATED INFORMATION',
+        description: 'Download MOD13A1.A2025257.h10v05.061.2025275114423.cmr.xml'
+      },
+      {
+        url: 's3://lp-prod-protected/MOD13A1.061/MOD13A1.A2025257.h10v05.061.2025275114423/MOD13A1.A2025257.h10v05.061.2025275114423.cmr.xml',
+        type: 'VIEW RELATED INFORMATION',
+        description: 'Direct S3 access for granule metadata'
+      },
+      {
+        url: 'https://data.lpdaac.earthdatacloud.nasa.gov/s3credentials',
+        type: 'VIEW RELATED INFORMATION',
+        description: 'API for temporary S3 credentials'
+      },
+      // Visualization images for quicklook/browse
+      {
+        url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD13A1.061/MOD13A1.A2025257.h10v05.061.2025275114423/BROWSE.MOD13A1.A2025257.h10v05.061.2025275114423.1.jpg',
+        type: 'GET RELATED VISUALIZATION',
+        description: 'Browse image 1'
+      },
+      {
+        url: 'https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD13A1.061/MOD13A1.A2025257.h10v05.061.2025275114423/BROWSE.MOD13A1.A2025257.h10v05.061.2025275114423.2.jpg',
+        type: 'GET RELATED VISUALIZATION',
+        description: 'Browse image 2'
+      },
+      {
+        url: 's3://lp-prod-public/MOD13A1.061/MOD13A1.A2025257.h10v05.061.2025275114423/BROWSE.MOD13A1.A2025257.h10v05.061.2025275114423.1.jpg',
+        type: 'GET RELATED VISUALIZATION',
+        description: 'S3 direct access for Browse image 1'
+      },
+      {
+        url: 's3://lp-prod-public/MOD13A1.061/MOD13A1.A2025257.h10v05.061.2025275114423/BROWSE.MOD13A1.A2025257.h10v05.061.2025275114423.2.jpg',
+        type: 'GET RELATED VISUALIZATION',
+        description: 'S3 direct access for Browse image 2'
+      }
+    ],
+    spatialExtent: {
+      horizontalSpatialDomain: {
+        geometry: {
+          gpolygons: [
+            {
+              boundary: {
+                points: [
+                  { longitude: -92.3012, latitude: 29.8411 },
+                  { longitude: -80.5776, latitude: 29.8962 },
+                  { longitude: -91.1741, latitude: 40.0638 },
+                  { longitude: -104.4326, latitude: 40 },
+                  { longitude: -92.3012, latitude: 29.8411 }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
     metadata: {
       probability: 0.6,
       region: 'Semi-arid zones'
-    }
-  },
-
-  {
-    id: 'card-006',
-    title: 'Water Usage Dispute',
-    description: 'SMAP reveals declining soil moisture across multiple farms',
-    dataSource: 'SMAP',
-    question: 'Negotiate water sharing with neighboring farms?',
-    options: [
-      {
-        id: 'opt-006-left',
-        label: 'Negotiate',
-        resultText: 'Shared resources but possible conflicts arise'
-      },
-      {
-        id: 'opt-006-right',
-        label: 'Prioritize Own Crops',
-        resultText: 'Immediate gain, but harmed relationships'
-      }
-    ],
-    impacts: {
-      left: {
-        economy: 0,
-        sustainability: 2,
-        technology: 1,
-        people: -1
-      },
-      right: {
-        economy: 1,
-        sustainability: -2,
-        technology: 0,
-        people: -2
-      }
-    },
-    education: 'SMAP’s regional data helps communities manage shared water under stress.',
-    metadata: {
-      probability: 0.5,
-      region: 'Agricultural clusters'
-    }
-  },
-
-  {
-    id: 'card-007',
-    title: 'Pesticide Dilemma',
-    description: 'MODIS VI and weather data suggest pest outbreak after unseasonal rains',
-    dataSource: 'MODIS + GPM',
-    question: 'Apply chemical pesticides or attempt biological control?',
-    options: [
-      {
-        id: 'opt-007-left',
-        label: 'Chemical',
-        resultText: 'Immediate pest reduction, but sustainability drops'
-      },
-      {
-        id: 'opt-007-right',
-        label: 'Biological',
-        resultText: 'Potential delayed effect, ecosystem preserved'
-      }
-    ],
-    impacts: {
-      left: {
-        economy: 2,
-        sustainability: -2,
-        technology: 0,
-        people: -1
-      },
-      right: {
-        economy: -1,
-        sustainability: 1,
-        technology: 2,
-        people: 2
-      }
-    },
-    education: 'MODIS and GPM can warn of conditions favoring pests, supporting decisions on crop protection strategies.',
-    metadata: {
-      probability: 0.4,
-      region: 'Subtropical zones'
-    }
-  },
-
-  {
-    id: 'card-008',
-    title: 'Tech Upgrade Funding',
-    description: 'Vegetation and soil data show potential for yield increase with new tech',
-    dataSource: 'MODIS + SMAP',
-    question: 'Invest in AI-powered monitoring or maintain traditional practices?',
-    options: [
-      {
-        id: 'opt-008-left',
-        label: 'Invest in AI',
-        resultText: 'Requires high investment, but increases long-term efficiency'
-      },
-      {
-        id: 'opt-008-right',
-        label: 'Maintain Tradition',
-        resultText: 'Saves money now, may lose out on future yield gains'
-      }
-    ],
-    impacts: {
-      left: {
-        economy: -2,
-        sustainability: 1,
-        technology: 2,
-        people: 1
-      },
-      right: {
-        economy: 2,
-        sustainability: -1,
-        technology: -1,
-        people: 0
-      }
-    },
-    education: 'Combining satellite sources enables real-time decision support for agricultural investment.',
-    metadata: {
-      probability: 0.3,
-      region: 'Advanced farming zones'
-    }
-  },
-  {
-    id: 'card-009',
-    title: 'Climate Insurance Decision',
-    description: 'GPM and MODIS data indicate rising risk of unseasonal storms',
-    dataSource: 'GPM + MODIS',
-    question: 'Purchase climate insurance before high-risk season?',
-    options: [
-      {
-        id: 'opt-009-left',
-        label: 'Buy Insurance',
-        resultText: 'Protected from losses, but increased expenses'
-      },
-      {
-        id: 'opt-009-right',
-        label: 'Skip Insurance',
-        resultText: 'Saved money now, but risk financial disaster if storms hit'
-      }
-    ],
-    impacts: {
-      left: {
-        economy: -2,
-        sustainability: 1,
-        technology: 1,
-        people: 2
-      },
-      right: {
-        economy: 2,
-        sustainability: -2,
-        technology: 0,
-        people: -2
-      }
-    },
-    education: 'Satellite data support insurance decisions by predicting risks and potential impacts.',
-    metadata: {
-      probability: 0.6,
-      region: 'Storm-prone zones'
-    }
-  },
-
-  {
-    id: 'card-010',
-    title: 'Community Training Program',
-    description: 'MODIS and SMAP analytics show local farmers underusing tech resources',
-    dataSource: 'MODIS + SMAP',
-    question: 'Organize workshops to train on new farming technologies?',
-    options: [
-      {
-        id: 'opt-010-left',
-        label: 'Host Workshops',
-        resultText: 'Community knowledge improved, but reduced short-term output'
-      },
-      {
-        id: 'opt-010-right',
-        label: 'Skip Training',
-        resultText: 'Production stays high, but innovations lag behind'
-      }
-    ],
-    impacts: {
-      left: {
-        economy: -1,
-        sustainability: 2,
-        technology: 2,
-        people: 2
-      },
-      right: {
-        economy: 1,
-        sustainability: -1,
-        technology: -2,
-        people: -1
-      }
-    },
-    education: 'Training initiatives boost long-term sustainability and innovation via satellite-informed practices.',
-    metadata: {
-      probability: 0.4,
-      region: 'Smallholder zones'
     }
   },
 ];

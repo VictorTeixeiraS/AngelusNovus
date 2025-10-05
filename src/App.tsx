@@ -8,7 +8,7 @@ import { HomeScreen } from "@/components/screens/HomeScreen";
 import { GameScreen } from "@/components/screens/GameScreen";
 import { SettingsScreen } from "@/components/screens/SettingsScreen";
 import { I18nextProvider } from 'react-i18next';
-import i18n from '@/services/LocalizationService';
+import i18n, { initLocalization } from '@/services/LocalizationService';
 import NotFound from "./pages/NotFound";
 import { VirtualAssistant } from "@/components/VirtualAssistant";
 import { SpeechBubbleProvider } from "@/contexts/SpeechBubbleContext";
@@ -21,10 +21,8 @@ const App = () => {
   const [i18nReady, setI18nReady] = useState(false);
 
   useEffect(() => {
-    import('@/services/LocalizationService').then(({ initLocalization }) => {
-      initLocalization().then(() => {
-        setI18nReady(true);
-      });
+    initLocalization().then(() => {
+      setI18nReady(true);
     });
   }, []);
 
