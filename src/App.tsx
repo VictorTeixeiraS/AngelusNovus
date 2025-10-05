@@ -11,6 +11,8 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from '@/services/LocalizationService';
 import NotFound from "./pages/NotFound";
 import { VirtualAssistant } from "@/components/VirtualAssistant";
+import { SpeechBubbleProvider } from "@/contexts/SpeechBubbleContext";
+import { SpeechBubble } from "@/components/SpeechBubble";
 import { useEffect, useState } from "react";
 
 const queryClient = new QueryClient();
@@ -41,15 +43,18 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <GameProvider>
-              <Routes>
-                <Route path="/" element={<HomeScreen />} />
-                <Route path="/game" element={<GameScreen />} />
-                <Route path="/settings" element={<SettingsScreen />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <VirtualAssistant />
-            </GameProvider>
+            <SpeechBubbleProvider>
+              <GameProvider>
+                <Routes>
+                  <Route path="/" element={<HomeScreen />} />
+                  <Route path="/game" element={<GameScreen />} />
+                  <Route path="/settings" element={<SettingsScreen />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+                <VirtualAssistant />
+                <SpeechBubble />
+              </GameProvider>
+            </SpeechBubbleProvider>
           </BrowserRouter>
         </TooltipProvider>
       </I18nextProvider>
