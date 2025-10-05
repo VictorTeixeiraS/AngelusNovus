@@ -285,6 +285,11 @@ export const sampleCards: Card[] = [
         label: 'Adjust Schedules',
         resultText: 'Reduced health risks, but increased labor costs'
       },
+      {
+        id: 'opt-004-right',
+        label: 'Maintain Hours',
+        resultText: 'Saved money, but workers\' health impacted'
+      }
     ],
     // Impact values
     impacts: {
